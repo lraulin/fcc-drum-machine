@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import DrumPad from "./DrumPad";
+import { bankOne as sounds } from "./sounds";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="drum-machine">
+      <div id="display">
+        {sounds.map((sound) => (
+          <DrumPad
+            id={sound.id}
+            keyTrigger={sound.keyTrigger}
+            url={sound.url}
+            keyCode={sound.keyCode}
+            key={sound.id}
+          />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
