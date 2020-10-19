@@ -1,17 +1,16 @@
-import React, { useRef } from "react";
+import React from "react";
+import { forwardRef } from "react";
 
-const DrumPad = ({ id, keyTrigger, keyCode, url }) => {
-  const audio = useRef(null);
-
+const DrumPad = forwardRef(({ id, keyTrigger, keyCode, url }, ref) => {
   const handleClick = () => {
-    audio.current.play();
+    ref.current.play();
   };
 
   const handleKeyPress = (event) => {
     console.log("Key Press!");
     event.preventDefault();
     if (event.charCode === keyCode) {
-      audio.current.play();
+      ref.current.play();
     }
   };
 
@@ -24,10 +23,10 @@ const DrumPad = ({ id, keyTrigger, keyCode, url }) => {
         onKeyDown={(e) => handleKeyPress(e)}
       >
         {keyTrigger}
-        <audio className="clip" id={keyTrigger} src={url} ref={audio}></audio>
+        <audio className="clip" id={keyTrigger} src={url} ref={ref}></audio>
       </button>
     </div>
   );
-};
+});
 
 export default DrumPad;
