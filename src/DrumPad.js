@@ -1,5 +1,4 @@
 import React from "react";
-import { forwardRef } from "react";
 
 const DrumPad = ({ id, keyTrigger, url, playSound }) => {
   const handleClick = (key) => {

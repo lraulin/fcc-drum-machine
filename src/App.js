@@ -1,4 +1,4 @@
-import React, { useRef, createRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./App.css";
 import DrumPad from "./DrumPad";
@@ -6,7 +6,6 @@ import { bankOne as sounds } from "./sounds";
 
 const App = () => {
   const [lastPressed, setLastPressed] = useState("");
-  const rootRef = useRef();
 
   const playSound = (key) => {
     const audio = document.getElementById(key);
@@ -49,7 +48,7 @@ const App = () => {
   }, []);
 
   return (
-    <div id="drum-machine" ref={rootRef} tabIndex="0">
+    <div id="drum-machine" tabIndex="0">
       {sounds.map((sound) => (
         <DrumPad
           id={sound.id}
