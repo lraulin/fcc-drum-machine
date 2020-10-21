@@ -12,16 +12,30 @@ const App = () => {
     return a;
   }, {});
 
+  const playSound = (key) => {
+    const audio = document.getElementById(key);
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise
+        .then((_) => {
+          audio.currentTime = 0;
+          console.log(`Playing sound for ${key}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    setLastPressed(
+      sounds.find((x) => x.keyTrigger.toUpperCase() === key.toUpperCase()).id
+    );
+  };
+
   useEffect(() => {
     const handleKeyDown = (event) => {
-      // const key = event.key.toUpperCase();
-      const key = String.fromCharCode(event.keyCode);
-      const ref = keyRefs[key];
-      if (!ref || !ref.current || ref.current.contains(event.target)) return;
       document.removeEventListener("keydown", handleKeyDown);
-      ref.current.currentTime = 0;
-      ref.current.play();
-      setLastPressed(sounds.filter((x) => x.keyTrigger === key)[0].id);
+      const key = event.key.toUpperCase();
+      playSound(key);
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -34,7 +48,7 @@ const App = () => {
     };
 
     return cleanup;
-  }, [keyRefs, setLastPressed]);
+  }, []);
 
   return (
     <div id="drum-machine" ref={rootRef} tabIndex="0">
@@ -44,8 +58,7 @@ const App = () => {
           keyTrigger={sound.keyTrigger}
           url={sound.url}
           key={sound.id}
-          setLastPressed={setLastPressed}
-          ref={keyRefs[sound.keyTrigger]}
+          playSound={playSound}
         />
       ))}
       <div id="display">{lastPressed}</div>
