@@ -14,14 +14,20 @@ const App = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      const key = event.key.toUpperCase();
+      // const key = event.key.toUpperCase();
+      const key = String.fromCharCode(event.keyCode);
       const ref = keyRefs[key];
       if (!ref || !ref.current || ref.current.contains(event.target)) return;
+      document.removeEventListener("keydown", handleKeyDown);
+      ref.current.currentTime = 0;
       ref.current.play();
       setLastPressed(sounds.filter((x) => x.keyTrigger === key)[0].id);
     };
 
     document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", () => {
+      document.addEventListener("keydown", handleKeyDown);
+    });
 
     const cleanup = () => {
       document.removeEventListener("keydown", handleKeyDown);

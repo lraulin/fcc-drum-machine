@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 
 const DrumPad = forwardRef(({ id, keyTrigger, url, setLastPressed }, ref) => {
   const handleClick = () => {
+    ref.current.currentTime = 0;
     ref.current.play();
     setLastPressed(id);
   };
