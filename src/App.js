@@ -7,13 +7,11 @@ import { bankOne as sounds } from "./sounds";
 const App = () => {
   const [lastPressed, setLastPressed] = useState("");
   const rootRef = useRef();
-  const keyRefs = sounds.reduce((a, c) => {
-    a[c.keyTrigger] = createRef();
-    return a;
-  }, {});
 
   const playSound = (key) => {
     const audio = document.getElementById(key);
+    if (!audio) return; // invalid key; do nothing
+
     const playPromise = audio.play();
 
     if (playPromise !== undefined) {
@@ -25,10 +23,10 @@ const App = () => {
         .catch((error) => {
           console.log(error);
         });
+      setLastPressed(
+        sounds.find((x) => x.keyTrigger.toUpperCase() === key.toUpperCase()).id
+      );
     }
-    setLastPressed(
-      sounds.find((x) => x.keyTrigger.toUpperCase() === key.toUpperCase()).id
-    );
   };
 
   useEffect(() => {

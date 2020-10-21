@@ -1,7 +1,7 @@
 import React from "react";
 import { forwardRef } from "react";
 
-const DrumPad = forwardRef(({ id, keyTrigger, url, playSound }) => {
+const DrumPad = ({ id, keyTrigger, url, playSound }) => {
   const handleClick = (key) => {
     playSound(key);
   };
@@ -18,6 +18,6 @@ const DrumPad = forwardRef(({ id, keyTrigger, url, playSound }) => {
       </button>
     </div>
   );
-});
+};
 
 export default DrumPad;
